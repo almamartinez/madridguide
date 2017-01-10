@@ -24,7 +24,7 @@ public class GetAllShopsInteractorFakeImpl implements IGetAllShopsInteractor {
     public void execute(Context context, final GetAllShopsInteractorResponse response) {
         List<Shop> data = getShops();
 
-        final Shops sut = Shops.build(data);
+        final Shops sut = (Shops) Shops.build(data);
 
         // simulate connection
         try {

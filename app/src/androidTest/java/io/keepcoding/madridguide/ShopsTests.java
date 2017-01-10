@@ -12,19 +12,19 @@ import io.keepcoding.madridguide.model.Shops;
 
 public class ShopsTests extends AndroidTestCase {
     public void testCreatingAShopsWithNullListReturnsNonNullShops() {
-        Shops sut = Shops.build(null);
+        Shops sut = (Shops) Shops.build(null);
         assertNotNull(sut);
-        assertNotNull(sut.allShops());
+        assertNotNull(sut.getAll());
     }
 
     public void testCreatingAShopsWithAListReturnsNonNullShops() {
         List<Shop> data = getShops();
 
-        Shops sut = Shops.build(data);
+        Shops sut = (Shops) Shops.build(data);
         assertNotNull(sut);
-        assertNotNull(sut.allShops());
-        assertEquals(sut.allShops(), data);
-        assertEquals(sut.allShops().size(), data.size());
+        assertNotNull(sut.getAll());
+        assertEquals(sut.getAll(), data);
+        assertEquals(sut.getAll().size(), data.size());
     }
 
     @NonNull

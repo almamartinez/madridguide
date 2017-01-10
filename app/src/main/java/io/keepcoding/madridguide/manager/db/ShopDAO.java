@@ -114,6 +114,6 @@ public class ShopDAO extends BaseDAO<Shop> {
             shopList.add(shop);
         }
 
-        return Shops.build(shopList);
+        return (Shops) Shops.build(shopList);
     }
 }

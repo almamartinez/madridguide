@@ -18,7 +18,7 @@ public class GetAllShopsInteractor implements IGetAllShopsInteractor {
             public void getShopEntitiesSuccess(List<ShopEntity> result) {
                 List<Shop> shops = new ShopEntityShopMapper().map(result);
                 if (response != null) {
-                    response.response(Shops.build(shops));
+                    response.response((Shops) Shops.build(shops));
                 }
             }
 
