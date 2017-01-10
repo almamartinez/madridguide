@@ -16,7 +16,7 @@ public class DBConstants {
     public static final String KEY_SHOP_LATITUDE = "latitude";
     public static final String KEY_SHOP_LONGITUDE = "longitude";
 
-    public static final String[] ALL_COLUMNS = {
+    public static final String[] SHOP_ALL_COLUMNS = {
             KEY_SHOP_ID,
             KEY_SHOP_NAME,
             KEY_SHOP_IMAGE_URL,
