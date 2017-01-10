@@ -68,7 +68,7 @@ public class ShopsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        final Shops shops = ShopDAO.getShops(data);
+        final Shops shops = new ShopDAO(this).getShops(data);
 
         shopsFragment.setListener(new OnElementClick<Shop>() {
             @Override
