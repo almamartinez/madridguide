@@ -1,9 +1,6 @@
 package io.keepcoding.madridguide.model;
 
-import java.io.Serializable;
-
-public class Activity implements Serializable {
-    private long id;
+public class Activity extends BaseModel {
     private String name;
     private String imageUrl;
     private String logoImgUrl;
@@ -15,20 +12,11 @@ public class Activity implements Serializable {
 
 
     public Activity(long id, String name) {
-        this.id = id;
+        super.setId(id);
         this.name = name;
     }
 
     private Activity() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Activity setId(long id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {
