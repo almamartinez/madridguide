@@ -3,6 +3,7 @@ package io.keepcoding.madridguide.activities;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -10,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import io.keepcoding.madridguide.R;
 import io.keepcoding.madridguide.fragments.ShopsFragment;
@@ -24,12 +27,13 @@ import io.keepcoding.madridguide.model.Shops;
 import io.keepcoding.madridguide.navigator.Navigator;
 import io.keepcoding.madridguide.util.OnElementClick;
 import io.keepcoding.madridguide.util.map.MapHelper;
+import io.keepcoding.madridguide.util.map.MapPinsAdder;
 
 public class ShopsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     GoogleMap googleMap;
 
-    private MapFragment mapFragment;
+    SupportMapFragment mapFragment;
     private ShopsFragment shopsFragment;
     private Shops shops;
 
@@ -56,16 +60,17 @@ public class ShopsActivity extends AppCompatActivity implements LoaderManager.Lo
                 });
 
                 shopsFragment.setShops(shops);
+                ShopsActivity.this.shops = shops;
+                setupMap();
             }
         });
 
-        setupMap();
     }
 
 
     private void initializeMap() {
         if (googleMap == null) {
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             googleMap = mapFragment.getMap();
 
             // check if map is created successfully or not
@@ -87,6 +92,20 @@ public class ShopsActivity extends AppCompatActivity implements LoaderManager.Lo
 
         initializeMap();
         MapHelper.centerMapInPosition(googleMap, lat, lon);
+
+        if (shops == null) {
+            Snackbar.make(mapFragment.getView(), R.string.no_shops, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null)
+                    .show();
+            return;
+        }
+        List<MapPinsAdder.MapPinnable> pins = new LinkedList<>();
+        for (Shop shop: shops.getAll()) {
+            MapPinsAdder.MapPinnable pin = shop;
+            pins.add(pin);
+        }
+
+        MapPinsAdder.addPins(pins, googleMap, this);
     }
 
     // Cursor Loaders using Content Provider

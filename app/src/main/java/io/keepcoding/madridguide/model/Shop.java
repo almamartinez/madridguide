@@ -1,6 +1,8 @@
 package io.keepcoding.madridguide.model;
 
-public class Shop extends BaseModel {
+import io.keepcoding.madridguide.util.map.MapPinsAdder;
+
+public class Shop extends BaseModel implements MapPinsAdder.MapPinnable {
     private String name;
     private String imageUrl;
     private String logoImgUrl;
@@ -65,6 +67,11 @@ public class Shop extends BaseModel {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getPinImageUrl() {
+        return getLogoImgUrl();
     }
 
     public Shop setDescription(String description) {
