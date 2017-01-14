@@ -7,4 +7,8 @@ import java.util.List;
 public class ShopResponse {
     @SerializedName("result")
     List<ShopEntity> result;
+
+    public List<ShopEntity> getResult() {
+        return result;
+    }
 }

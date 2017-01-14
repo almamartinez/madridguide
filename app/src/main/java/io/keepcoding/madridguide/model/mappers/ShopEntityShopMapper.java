@@ -8,6 +8,10 @@ import io.keepcoding.madridguide.model.Shop;
 
 public class ShopEntityShopMapper {
     public List<Shop> map(List<ShopEntity> shopEntities) {
+        if (shopEntities == null) {
+            return null;
+        }
+
         List<Shop> result = new LinkedList<>();
 
         for (ShopEntity entity: shopEntities) {
@@ -15,8 +19,11 @@ public class ShopEntityShopMapper {
             // detect current lang
             shop.setDescription(entity.getDescriptionEs());
             shop.setLogoImgUrl(entity.getLogoImg());
-
-            // ...
+            shop.setImageUrl(entity.getImg());
+            shop.setAddress(entity.getAddress());
+            shop.setUrl(entity.getUrl());
+            shop.setLatitude(entity.getLatitide());
+            shop.setLongitude(entity.getLongitude());
 
             result.add(shop);
         }
