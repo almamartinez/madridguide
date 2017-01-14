@@ -22,7 +22,7 @@ public class GetAllShopsFromLocalCacheInteractor {
                 ShopDAO dao = new ShopDAO(context);
 
                 List<Shop> shopList = dao.query();
-                final Shops shops = (Shops) Shops.build(shopList);
+                final Shops shops = Shops.build(shopList);
 
                 MainThread.run(new Runnable() {
                     @Override

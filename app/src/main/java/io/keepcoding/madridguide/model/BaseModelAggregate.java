@@ -3,24 +3,10 @@ package io.keepcoding.madridguide.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BaseModelAggregate<E extends BaseModel> implements Iterable<E>, Updatable<E> {
     private List<E> list;
-
-    public static @NonNull
-    BaseModelAggregate build(@NonNull List<? extends BaseModel> baseModelList) {
-        BaseModelAggregate shops = new BaseModelAggregate();
-
-        if (baseModelList == null) {
-            shops.list = new ArrayList<>();
-        } else {
-            shops.list = baseModelList;
-        }
-
-        return shops;
-    }
 
     @Override
     public long size() {
@@ -54,5 +40,9 @@ public class BaseModelAggregate<E extends BaseModel> implements Iterable<E>, Upd
     @Override
     public void edit(E e, long index) {
 
+    }
+
+    public void setList(List<E> list) {
+        this.list = list;
     }
 }
