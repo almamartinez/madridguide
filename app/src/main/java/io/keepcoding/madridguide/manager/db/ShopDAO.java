@@ -11,17 +11,18 @@ import java.util.List;
 import io.keepcoding.madridguide.model.Shop;
 import io.keepcoding.madridguide.model.Shops;
 
-import static io.keepcoding.madridguide.manager.db.DBConstants.SHOP_ALL_COLUMNS;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_ADDRESS;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_DESCRIPTION;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_ID;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_IMAGE_URL;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_LATITUDE;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_LOGO_IMAGE_URL;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_LONGITUDE;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_NAME;
-import static io.keepcoding.madridguide.manager.db.DBConstants.KEY_SHOP_URL;
-import static io.keepcoding.madridguide.manager.db.DBConstants.TABLE_SHOP;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_ADDRESS;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_DESCRIPTION;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_ID;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_IMAGE_URL;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_LATITUDE;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_LOGO_IMAGE_URL;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_LONGITUDE;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_NAME;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.KEY_SHOP_URL;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.SHOP_ALL_COLUMNS;
+import static io.keepcoding.madridguide.manager.db.DBConstants.Shop.TABLE_SHOP;
+
 
 public class ShopDAO extends BaseDAO<Shop> {
 
