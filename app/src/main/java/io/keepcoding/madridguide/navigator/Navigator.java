@@ -1,6 +1,9 @@
 package io.keepcoding.madridguide.navigator;
 
+import android.app.Activity;
 import android.content.Intent;
+
+import java.lang.ref.WeakReference;
 
 import io.keepcoding.madridguide.activities.MainActivity;
 import io.keepcoding.madridguide.activities.ShopDetailActivity;
@@ -9,6 +12,8 @@ import io.keepcoding.madridguide.model.Shop;
 import io.keepcoding.madridguide.util.Constants;
 
 public class Navigator {
+    private static WeakReference<Activity> startActivity;
+
     public static Intent navigateFromMainActivityToShopsActivity(MainActivity mainActivity) {
         Intent i = new Intent(mainActivity, ShopsActivity.class);
         mainActivity.startActivity(i);
@@ -25,4 +30,13 @@ public class Navigator {
         return i;
     }
 
+    public static Intent navigateToMainActivity() {
+        Intent i = new Intent(startActivity.get(), MainActivity.class);
+        startActivity.get().startActivity(i);
+        return i;
+    }
+
+    public static void setStartActivity(Activity startActivity) {
+        Navigator.startActivity = new WeakReference<Activity>(startActivity);
+    }
 }

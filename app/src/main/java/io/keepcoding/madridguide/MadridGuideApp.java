@@ -14,6 +14,7 @@ import io.keepcoding.madridguide.interactors.GetAllShopsInteractor;
 import io.keepcoding.madridguide.interactors.GetAllShopsInteractorResponse;
 import io.keepcoding.madridguide.interactors.SaveLastUpdatedDateInteractor;
 import io.keepcoding.madridguide.model.Shops;
+import io.keepcoding.madridguide.navigator.Navigator;
 
 public class MadridGuideApp extends Application {
     private static WeakReference<Context> appContext;
@@ -56,7 +57,12 @@ public class MadridGuideApp extends Application {
                                         shops, new CacheAllShopsInteractor.CacheAllShopsInteractorResponse() {
                                             @Override
                                             public void response(boolean success) {
-                                                new SaveLastUpdatedDateInteractor().execute(getAppContext(), null);
+                                                new SaveLastUpdatedDateInteractor().execute(getAppContext(), new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Navigator.navigateToMainActivity();
+                                                    }
+                                                });
                                             }
                                         });
                             }
@@ -67,7 +73,7 @@ public class MadridGuideApp extends Application {
     }
 
     private void cacheNotExpired() {
-
+        Navigator.navigateToMainActivity();
     }
 
     @Override
