@@ -4,30 +4,30 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import io.keepcoding.madridguide.manager.db.ShopDAO;
-import io.keepcoding.madridguide.model.Shop;
-import io.keepcoding.madridguide.model.Shops;
+import io.keepcoding.madridguide.manager.db.ActivityDAO;
+import io.keepcoding.madridguide.model.Activities;
+import io.keepcoding.madridguide.model.Activity;
 import io.keepcoding.madridguide.util.MainThread;
 
-public class CacheAllShopsInteractor {
-    public interface CacheAllShopsInteractorResponse {
+public class CacheAllActivitiesInteractor {
+    public interface CacheAllActivitiesInteractorResponse {
         public void response(boolean success);
     }
 
-    public void execute(final Context context, final @NonNull Shops shops, final CacheAllShopsInteractorResponse response) {
+    public void execute(final Context context, final @NonNull Activities activities, final CacheAllActivitiesInteractorResponse response) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (context == null || shops == null) {
+                if (context == null || activities == null) {
                     Log.w("CacheAllShopsInteractor", "Context or Shops null");
                     return;
                 }
 
-                ShopDAO dao = new ShopDAO(context);
+                ActivityDAO dao = new ActivityDAO(context);
 
                 boolean success = true;
-                for (Shop shop: shops.getAll()) {
-                    success = dao.insert(shop) > 0;
+                for (Activity activity: activities.getAll()) {
+                    success = dao.insert(activity) > 0;
                     if (!success) {
                         break;
                     }
