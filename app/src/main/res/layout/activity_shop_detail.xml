@@ -14,13 +14,25 @@
         android:id="@+id/activity_shop_detail_shop_name_text"
         tools:text="El Corte Inglés"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/activity_shop_detail_shop_logo_image"
+        />
 
     <ImageView
         android:id="@+id/activity_shop_detail_shop_logo_image"
         android:layout_width="80dp"
         android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/activity_shop_detail_shop_description_text"
+        tools:text="El Corte Inglés"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_shop_detail_shop_logo_image"
+        />
 
 </RelativeLayout>

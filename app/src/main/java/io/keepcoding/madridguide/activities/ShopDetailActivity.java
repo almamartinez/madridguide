@@ -21,6 +21,8 @@ public class ShopDetailActivity extends AppCompatActivity {
     @BindView(R.id.activity_shop_detail_shop_logo_image)
     ImageView shopLogoImage;
 
+    @BindView(R.id.activity_shop_detail_shop_description_text) TextView shopDescriptionText;
+
     Shop shop;
 
     @Override
@@ -44,6 +46,7 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     private void updateUI() {
         shopNameText.setText(shop.getName());
+        shopDescriptionText.setText(shop.getDescription());
         Picasso.with(this)
                 .load(shop.getLogoImgUrl())
                 .into(shopLogoImage);
