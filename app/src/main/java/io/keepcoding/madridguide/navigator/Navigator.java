@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import java.lang.ref.WeakReference;
 
+import io.keepcoding.madridguide.activities.ActivitiesActivity;
 import io.keepcoding.madridguide.activities.MainActivity;
 import io.keepcoding.madridguide.activities.ShopDetailActivity;
 import io.keepcoding.madridguide.activities.ShopsActivity;
@@ -16,6 +17,12 @@ public class Navigator {
 
     public static Intent navigateFromMainActivityToShopsActivity(MainActivity mainActivity) {
         Intent i = new Intent(mainActivity, ShopsActivity.class);
+        mainActivity.startActivity(i);
+        return i;
+    }
+
+    public static Intent navigateFromMainActivityToActivitiesActivity(MainActivity mainActivity) {
+        Intent i = new Intent(mainActivity, ActivitiesActivity.class);
         mainActivity.startActivity(i);
         return i;
     }

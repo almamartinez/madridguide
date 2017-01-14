@@ -36,6 +36,7 @@
 
         </activity>
         <activity android:name=".activities.ShopsActivity" />
+        <activity android:name=".activities.ActivitiesActivity" />
         <activity android:name=".activities.ShopDetailActivity" />
         <activity android:name=".activities.SplashActivity">
 
