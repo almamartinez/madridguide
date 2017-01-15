@@ -35,7 +35,13 @@
         <activity android:name=".activities.MainActivity">
 
         </activity>
-        <activity android:name=".activities.ShopsActivity" />
+        <activity android:name=".activities.ShopsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".activities.ActivitiesActivity" />
         <activity android:name=".activities.ShopDetailActivity" />
         <activity android:name=".activities.ActivityDetailActivity" />

@@ -3,4 +3,5 @@
     <string name="activity_main_button_shops_text">Shops</string>
     <string name="activity_main_button_activities_text">Activities</string>
     <string name="no_shops">No Shops</string>
+    <string name="search_hint">Enter search</string>
 </resources>
