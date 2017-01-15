@@ -8,16 +8,18 @@ import android.os.Looper;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
 public class MapPinsAdder {
-    public interface MapPinnable {
+    public interface MapPinnable<E> {
         float getLatitude();
         float getLongitude();
-        String getDescription();
+        String getPinDescription();
         String getPinImageUrl();
+        E getRelatedModelObject();
     }
 
     public static void addPins(List<MapPinnable> mapPinnables, final GoogleMap googleMap, final Context context) {
@@ -40,17 +42,21 @@ public class MapPinsAdder {
                             e.printStackTrace();
                         }
                         */
-                        final MarkerOptions marker = new MarkerOptions().position(position).title(pinnable.getDescription());
+                        final MarkerOptions marker = new MarkerOptions().position(position).title(pinnable.getPinDescription());
                         marker.icon(bitmapDescriptor);
+
 
                         (new Handler(Looper.getMainLooper())).post(new Runnable() {
                             @Override
                             public void run() {
-                                googleMap.addMarker(marker);
+                                Marker m = googleMap.addMarker(marker);
+                                m.setTag(pinnable);
                             }
                         });
                     }
                 }).start();
         }
     }
+
+
 }

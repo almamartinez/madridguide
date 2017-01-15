@@ -1,13 +1,18 @@
 package io.keepcoding.madridguide.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +27,7 @@ import io.keepcoding.madridguide.util.OnElementClick;
 import io.keepcoding.madridguide.util.map.MapHelper;
 import io.keepcoding.madridguide.util.map.MapPinsAdder;
 
-public class ActivitiesActivity extends AppCompatActivity {
+public class ActivitiesActivity extends AppCompatActivity implements GoogleMap.OnInfoWindowClickListener {
 
     GoogleMap googleMap;
 
@@ -49,35 +54,50 @@ public class ActivitiesActivity extends AppCompatActivity {
 
                 activitiesFragment.setActivities(activities);
                 ActivitiesActivity.this.activities = activities;
-                setupMap();
+                initializeMap();
             }
         });
     }
 
 
     private void initializeMap() {
-        if (googleMap == null) {
-            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            googleMap = mapFragment.getMap();
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                // check if map is created successfully or not
+                if (googleMap == null) {
+                    Toast.makeText(getApplicationContext(),
+                            "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
 
-            // check if map is created successfully or not
-            if (googleMap == null) {
-                Toast.makeText(getApplicationContext(),
-                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                googleMap.setMyLocationEnabled(true);
-                googleMap.getUiSettings().setRotateGesturesEnabled(false);
+                    setupMap(googleMap);
+
+                    if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    googleMap.setMyLocationEnabled(true);
+                    googleMap.getUiSettings().setRotateGesturesEnabled(false);
+
+                }
             }
-        }
+        });
+
     }
 
 
-    private void setupMap() {
+    private void setupMap(GoogleMap googleMap) {
         final float lat = 40.415363f;
         final float lon = -3.707398f;
 
-        initializeMap();
         MapHelper.centerMapInPosition(googleMap, lat, lon);
 
         if (activities == null) {
@@ -87,11 +107,24 @@ public class ActivitiesActivity extends AppCompatActivity {
             return;
         }
         List<MapPinsAdder.MapPinnable> pins = new LinkedList<>();
-        for (Activity activity: activities.getAll()) {
+        for (Activity activity : activities.getAll()) {
             MapPinsAdder.MapPinnable pin = activity;
+
             pins.add(pin);
         }
 
         MapPinsAdder.addPins(pins, googleMap, this);
+
+        googleMap.setOnInfoWindowClickListener(this);
+
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        if (marker.getTag() != null) {
+            Activity activity = (Activity) marker.getTag();
+
+            Navigator.navigateFromActivitiesActivityToActivityDetailActivity(this, activity);
+        }
     }
 }

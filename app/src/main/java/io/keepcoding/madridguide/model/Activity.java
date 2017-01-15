@@ -2,7 +2,7 @@ package io.keepcoding.madridguide.model;
 
 import io.keepcoding.madridguide.util.map.MapPinsAdder;
 
-public class Activity extends BaseModel implements MapPinsAdder.MapPinnable {
+public class Activity extends BaseModel implements MapPinsAdder.MapPinnable<Activity> {
     private String name;
     private String imageUrl;
     private String logoImgUrl;
@@ -96,5 +96,15 @@ public class Activity extends BaseModel implements MapPinsAdder.MapPinnable {
     public Activity setLongitude(float longitude) {
         this.longitude = longitude;
         return this;
+    }
+
+    @Override
+    public Activity getRelatedModelObject() {
+        return this;
+    }
+
+    @Override
+    public String getPinDescription() {
+        return getName();
     }
 }
