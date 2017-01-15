@@ -17,6 +17,7 @@ import io.keepcoding.madridguide.fragments.ActivitiesFragment;
 import io.keepcoding.madridguide.interactors.GetAllActivitiesInteractor;
 import io.keepcoding.madridguide.model.Activities;
 import io.keepcoding.madridguide.model.Activity;
+import io.keepcoding.madridguide.navigator.Navigator;
 import io.keepcoding.madridguide.util.OnElementClick;
 import io.keepcoding.madridguide.util.map.MapHelper;
 import io.keepcoding.madridguide.util.map.MapPinsAdder;
@@ -42,8 +43,7 @@ public class ActivitiesActivity extends AppCompatActivity {
                 activitiesFragment.setListener(new OnElementClick<Activity>() {
                     @Override
                     public void clickedOn(@NonNull Activity element, int position) {
-                        //Navigator.navigateFromShopsActivityToShopDetailActivity(ActivitiesActivity.this, shop);
-
+                        Navigator.navigateFromActivitiesActivityToActivityDetailActivity(ActivitiesActivity.this, element);
                     }
                 });
 
