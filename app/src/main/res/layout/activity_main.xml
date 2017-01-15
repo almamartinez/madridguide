@@ -11,6 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.keepcoding.madridguide.activities.MainActivity">
 
+    <ImageView
+        android:src="@drawable/puerta_alcala"
+        android:scaleType="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
     <Button
         android:id="@+id/button_activity_main_open_shops"
         android:layout_width="match_parent"
