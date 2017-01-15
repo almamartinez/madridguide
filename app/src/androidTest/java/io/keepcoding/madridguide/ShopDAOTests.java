@@ -5,6 +5,7 @@ import android.test.AndroidTestCase;
 
 import java.util.List;
 
+import io.keepcoding.madridguide.manager.db.DBConstants;
 import io.keepcoding.madridguide.manager.db.ShopDAO;
 import io.keepcoding.madridguide.model.Shop;
 
@@ -69,7 +70,21 @@ public class ShopDAOTests extends AndroidTestCase {
         }
     }
 
+    public void testQuerySearchShops() {
+        final ShopDAO dao = new ShopDAO(getContext());
+        dao.deleteAll();
 
+        dao.insert(new Shop(1, SHOP_TESTING_NAME).setAddress(ADDRESS_TESTING));
+        dao.insert(new Shop(1, SHOP_TESTING_NAME).setAddress(ADDRESS_TESTING));
+        dao.insert(new Shop(1, SHOP_TESTING_NAME).setAddress(ADDRESS_TESTING));
+        dao.insert(new Shop(1, "find me").setAddress(ADDRESS_TESTING));
+
+        List<Shop> shopList = dao.query(DBConstants.Shop.KEY_SHOP_NAME + "=?", new String[]{"find me" });
+        assertNotNull(shopList);
+        assertTrue(shopList.size() > 0);
+
+        assertEquals(shopList.get(0).getName(), "find me");
+    }
 
     private int getCount(ShopDAO sut) {
         final Cursor cursor = sut.queryCursor();

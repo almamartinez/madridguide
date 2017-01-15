@@ -80,6 +80,16 @@ public abstract class BaseDAO<E extends BaseModel> implements DAOPersistable<E> 
         return c;
     }
 
+    @Nullable
+    @Override
+    public Cursor queryCursor(String where, String[] whereArgs) {
+        Cursor c = db.query(getTableName(), getAllColumnNames(), where, whereArgs, null, null, getIdFieldName());
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
     @Override
     public
     @Nullable
@@ -101,6 +111,26 @@ public abstract class BaseDAO<E extends BaseModel> implements DAOPersistable<E> 
     @Override
     public List<E> query() {
         Cursor c = queryCursor();
+
+        if (c == null || !c.moveToFirst()) {
+            return null;
+        }
+
+        List<E> elements = new LinkedList<>();
+
+        c.moveToFirst();
+        do {
+            E e = getElementFromCursor(c);
+            elements.add(e);
+        } while (c.moveToNext());
+
+        return elements;
+    }
+
+    @Nullable
+    @Override
+    public List<E> query(String where, String[] whereArgs) {
+        Cursor c = queryCursor(where, whereArgs);
 
         if (c == null || !c.moveToFirst()) {
             return null;

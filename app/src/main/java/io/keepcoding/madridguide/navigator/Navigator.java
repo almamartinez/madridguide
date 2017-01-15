@@ -50,6 +50,9 @@ public class Navigator {
     }
 
     public static Intent navigateToMainActivity() {
+        if (startActivity == null) {
+            return null;
+        }
         Intent i = new Intent(startActivity.get(), MainActivity.class);
         startActivity.get().startActivity(i);
         return i;

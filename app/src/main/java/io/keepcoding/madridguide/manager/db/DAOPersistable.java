@@ -14,4 +14,7 @@ public interface DAOPersistable<T> {
     @Nullable Cursor queryCursor();
     T query(final long id);
     @Nullable List<T> query();
+    @Nullable List<T> query(String where, String[] whereArgs);
+    @Nullable Cursor queryCursor(String where, String[] whereArgs);
+
 }
