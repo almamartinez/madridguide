@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
+import io.keepcoding.madridguide.interactors.CacheAllActivitiesImagesInteractor;
 import io.keepcoding.madridguide.interactors.CacheAllActivitiesInteractor;
 import io.keepcoding.madridguide.interactors.CacheAllShopImagesInteractor;
 import io.keepcoding.madridguide.interactors.CacheAllShopsInteractor;
@@ -53,41 +54,44 @@ public class MadridGuideApp extends Application {
         new CleanLocalCacheInteractor().execute(getBaseContext(), new Runnable() {
             @Override
             public void run() {
-                new GetAllShopsInteractor().execute(getApplicationContext(),
-                        new GetAllShopsInteractorResponse() {
+            new GetAllShopsInteractor().execute(getApplicationContext(),
+                    new GetAllShopsInteractorResponse() {
+                        @Override
+                        public void response(final Shops shops) {
+                new CacheAllShopsInteractor().execute(getApplicationContext(),
+                        shops, new CacheAllShopsInteractor.CacheAllShopsInteractorResponse() {
                             @Override
-                            public void response(final Shops shops) {
-                                new CacheAllShopsInteractor().execute(getApplicationContext(),
-                                        shops, new CacheAllShopsInteractor.CacheAllShopsInteractorResponse() {
+                            public void response(boolean success) {
+                    new CacheAllShopImagesInteractor().execute(getAppContext(), shops, new CacheAllShopImagesInteractor.CacheAllShopImagesInteractorResponse() {
+                        @Override
+                        public void response() {
+                            new GetAllActivitiesInteractor().execute(getApplicationContext(), new GetAllActivitiesInteractor.GetAllActivitiesInteractorResponse() {
+                                @Override
+                                public void response(final Activities activities) {
+                                new CacheAllActivitiesInteractor().execute(getApplicationContext(), activities, new CacheAllActivitiesInteractor.CacheAllActivitiesInteractorResponse() {
+                                    @Override
+                                    public void response(boolean success) {
+                                        new CacheAllActivitiesImagesInteractor().execute(getBaseContext(), activities, new CacheAllActivitiesImagesInteractor.CacheAllShopImagesInteractorResponse() {
                                             @Override
-                                            public void response(boolean success) {
-
-                                                new CacheAllShopImagesInteractor().execute(getAppContext(), shops, new CacheAllShopImagesInteractor.CacheAllShopImagesInteractorResponse() {
+                                            public void response() {
+                                                new SaveLastUpdatedDateInteractor().execute(getAppContext(), new Runnable() {
                                                     @Override
-                                                    public void response() {
-                                                        new GetAllActivitiesInteractor().execute(getApplicationContext(), new GetAllActivitiesInteractor.GetAllActivitiesInteractorResponse() {
-                                                            @Override
-                                                            public void response(Activities activities) {
-                                                                new CacheAllActivitiesInteractor().execute(getApplicationContext(), activities, new CacheAllActivitiesInteractor.CacheAllActivitiesInteractorResponse() {
-                                                                    @Override
-                                                                    public void response(boolean success) {
-                                                                        new SaveLastUpdatedDateInteractor().execute(getAppContext(), new Runnable() {
-                                                                            @Override
-                                                                            public void run() {
-                                                                                Navigator.navigateToMainActivity();
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
+                                                    public void run() {
+                                                        Navigator.navigateToMainActivity();
                                                     }
                                                 });
                                             }
                                         });
-                            }
+                                    }
+                                });
+                                }
+                            });
                         }
-                );
+                    });
+                    }
+                });
+                }
+            });
             }
         });
     }
