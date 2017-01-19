@@ -3,11 +3,12 @@ package io.keepcoding.madridguide.interactors;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.jetbrains.annotations.Nullable;
 
 import io.keepcoding.madridguide.model.Shop;
 import io.keepcoding.madridguide.model.Shops;
@@ -18,7 +19,7 @@ public class CacheAllShopImagesInteractor {
         public void response();
     }
 
-    public void execute(final Context context, final @NonNull Shops shops, final CacheAllShopImagesInteractorResponse response) {
+    public void execute(final Context context, final @Nullable Shops shops, final CacheAllShopImagesInteractorResponse response) {
         if (context == null || shops == null) {
             Log.w("CacheAllShopsInteractor", "Context or Shops null");
             return;
