@@ -8,11 +8,17 @@ import java.util.Date;
 
 import io.keepcoding.madridguide.util.Constants;
 import io.keepcoding.madridguide.util.MainThread;
+import io.keepcoding.madridguide.util.NetworkUtil;
 
 public class CheckCacheExpiredInteractor {
     private long MILLISECONDS_IN_A_WEEK = 1000*60*60*24*7;
 
     public void execute(final Context context, final Runnable onCacheNotExpired, final Runnable onCacheExpired) {
+        if (!NetworkUtil.isOnline(context)) {
+            MainThread.run(onCacheNotExpired);
+            return;
+        }
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         long time = preferences.getLong(Constants.LAST_UPDATED_CACHE, 0);
 
